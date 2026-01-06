@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hostel Utility Application</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Hostel Utility Application</h1>
+        <p>Distributed Systems Project - All 5 Modules</p>
+      </header>
+
+      <nav>
+        <button onclick="showModule('complaints')" class="nav-btn active">
+          Complaints
+        </button>
+        <button onclick="showModule('rooms')" class="nav-btn">Room Info</button>
+        <button onclick="showModule('notices')" class="nav-btn">Notices</button>
+        <button onclick="showModule('resources')" class="nav-btn">
+          P2P Resources
+        </button>
+        <button onclick="showModule('feedback')" class="nav-btn">
+          Mess Feedback
+        </button>
+      </nav>
+
+      <!-- Module 1: Socket Programming - Complaints -->
+      <div id="complaints" class="module active">
+        <h2>Complaint Management System (Socket Programming)</h2>
+        <div class="form-section">
+          <h3>Submit Complaint</h3>
+          <form id="complaintForm">
+            <input type="text" id="room" placeholder="Room Number" required />
+            <select id="category" required>
+              <option value="">Select Category</option>
+              <option value="Water">Water</option>
+              <option value="Electricity">Electricity</option>
+              <option value="Cleanliness">Cleanliness</option>
+              <option value="Other">Other</option>
+            </select>
+            <textarea
+              id="description"
+              placeholder="Description"
+              required
+            ></textarea>
+            <button type="submit">Submit Complaint</button>
+          </form>
+        </div>
+        <div class="result-section">
+          <h3>Complaint Status</h3>
+          <div id="complaintResult"></div>
+          <button onclick="loadComplaints()">View All Complaints</button>
+          <div id="complaintsList"></div>
+        </div>
+      </div>
+
+      <!-- Module 2: RMI - Room Information -->
+      <div id="rooms" class="module">
+        <h2>Room Information Service (Java RMI)</h2>
+        <div class="form-section">
+          <h3>Search Room</h3>
+          <input type="text" id="roomSearch" placeholder="Enter Room Number" />
+          <button onclick="searchRoom()">Search Room</button>
+          <button onclick="loadAllRooms()">View All Rooms</button>
+        </div>
+        <div class="result-section">
+          <div id="roomResult"></div>
+        </div>
+      </div>
+
+      <!-- Module 3: REST API - Notices -->
+      <div id="notices" class="module">
+        <h2>Notice Board System (REST API)</h2>
+        <div class="form-section">
+          <h3>Admin - Add Notice</h3>
+          <form id="noticeForm">
+            <input
+              type="text"
+              id="noticeTitle"
+              placeholder="Notice Title"
+              required
+            />
+            <textarea
+              id="noticeMessage"
+              placeholder="Notice Message"
+              required
+            ></textarea>
+            <button type="submit">Add Notice</button>
+          </form>
+        </div>
+        <div class="result-section">
+          <h3>Student - View Notices</h3>
+          <button onclick="loadNotices()">Load Notices</button>
+          <div id="noticesList"></div>
+        </div>
+      </div>
+
+      <!-- Module 4: P2P - Resource Sharing -->
+      <div id="resources" class="module">
+        <h2>Student Resource Sharing (P2P)</h2>
+        <div class="form-section">
+          <h3>Upload Resource</h3>
+          <input type="text" id="fileName" placeholder="File Name" />
+          <input type="file" id="fileUpload" />
+          <button onclick="uploadFile()">Upload File</button>
+        </div>
+        <div class="form-section">
+          <h3>Search & Download</h3>
+          <input type="text" id="searchFile" placeholder="Search File Name" />
+          <button onclick="searchFiles()">Search Files</button>
+          <div id="searchResults"></div>
+        </div>
+      </div>
+
+      <!-- Module 5: Shared Memory - Mess Feedback -->
+      <div id="feedback" class="module">
+        <h2>Mess Feedback Live Counter (Shared Memory)</h2>
+        <div class="form-section">
+          <h3>Submit Feedback</h3>
+          <div class="feedback-buttons">
+            <button onclick="submitFeedback('good')" class="feedback-btn good">
+              Good 👍
+            </button>
+            <button
+              onclick="submitFeedback('average')"
+              class="feedback-btn average"
+            >
+              Average 👌
+            </button>
+            <button onclick="submitFeedback('poor')" class="feedback-btn poor">
+              Poor 👎
+            </button>
+          </div>
+        </div>
+        <div class="result-section">
+          <h3>Live Results</h3>
+          <button onclick="loadFeedbackResults()">Refresh Results</button>
+          <div id="feedbackResults">
+            <div class="counter">Good: <span id="goodCount">0</span></div>
+            <div class="counter">Average: <span id="averageCount">0</span></div>
+            <div class="counter">Poor: <span id="poorCount">0</span></div>
+            <div class="counter">Total: <span id="totalCount">0</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

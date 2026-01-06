@@ -1,0 +1,38 @@
+Assignment: Distributed Systems Implementation
+
+Objective: Implement a distributed application using multiple communication models
+
+Requirements:
+1. Socket Programming Module
+   - Client-server architecture
+   - Multi-client support
+   - Data persistence
+
+2. RMI Module  
+   - Remote method invocation
+   - Distributed objects
+   - Registry service
+
+3. REST API Module
+   - HTTP-based communication
+   - JSON data format
+   - Stateless design
+
+4. P2P Module
+   - Peer-to-peer communication
+   - File sharing capability
+   - Decentralized architecture
+
+5. Shared Memory Module
+   - Inter-process communication
+   - Synchronization mechanisms
+   - Concurrent access control
+
+Deliverables:
+- Complete source code
+- Documentation
+- Demo presentation
+- Test cases
+
+Due Date: End of semester
+Marks: 100 points
