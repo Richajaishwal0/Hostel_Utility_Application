@@ -118,44 +118,70 @@ function loadComplaints() {
 // Module 2: RMI - Room Information
 function searchRoom() {
     const roomNumber = document.getElementById('roomSearch').value;
-    
-    // Simulate RMI call
-    const roomData = {
-        '101': {occupants: ['John Doe', 'Jane Smith'], warden: 'Mr. Anderson', contact: '9876543210'},
-        '102': {occupants: ['Bob Wilson'], warden: 'Mr. Anderson', contact: '9876543210'},
-        '201': {occupants: ['Alice Brown', 'Carol White'], warden: 'Ms. Johnson', contact: '9876543211'},
-        '202': {occupants: ['David Lee'], warden: 'Ms. Johnson', contact: '9876543211'}
-    };
-    
-    const room = roomData[roomNumber];
-    
-    if (room) {
-        document.getElementById('roomResult').innerHTML = `
-            <div class="result-item success">
-                <h4>Room ${roomNumber} Information</h4>
-                <p><strong>Occupants:</strong> ${room.occupants.join(', ')}</p>
-                <p><strong>Warden:</strong> ${room.warden}</p>
-                <p><strong>Contact:</strong> ${room.contact}</p>
-            </div>
-        `;
-    } else {
+    if (!roomNumber) {
         document.getElementById('roomResult').innerHTML = 
-            `<div class="result-item error">Room ${roomNumber} not found!</div>`;
+            `<div class="result-item error">Please enter a room number</div>`;
+        return;
     }
+    
+    // Real RMI call via bridge
+    fetch(`http://localhost:8083/room?number=${roomNumber}`)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.error) {
+            document.getElementById('roomResult').innerHTML = 
+                `<div class="result-item error">${data.error}</div>`;
+        } else {
+            document.getElementById('roomResult').innerHTML = `
+                <div class="result-item success">
+                    <h4>Room ${data.room} Information</h4>
+                    <p><strong>Occupants:</strong> ${data.occupants}</p>
+                    <p><strong>Warden:</strong> ${data.warden}</p>
+                    <p><strong>Contact:</strong> ${data.contact}</p>
+                </div>
+            `;
+        }
+    })
+    .catch(error => {
+        console.error('RMI Error:', error);
+        document.getElementById('roomResult').innerHTML = 
+            `<div class="result-item error">Connection failed: ${error.message}. Check if RMI Bridge (port 8083) is running.</div>`;
+    });
 }
 
 function loadAllRooms() {
-    const allRooms = ['101', '102', '201', '202'];
-    let html = '<h4>Available Rooms:</h4>';
-    
-    allRooms.forEach(room => {
-        html += `<div class="result-item">
-            <strong>Room ${room}</strong>
-            <button onclick="document.getElementById('roomSearch').value='${room}'; searchRoom();">View Details</button>
-        </div>`;
+    fetch('http://localhost:8083/rooms')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+        return response.text();
+    })
+    .then(data => {
+        const rooms = data.replace(/[\[\]]/g, '').split(', ');
+        let html = '<h4>Available Rooms:</h4>';
+        
+        rooms.forEach(room => {
+            if (room.trim()) {
+                html += `<div class="result-item">
+                    <strong>Room ${room}</strong>
+                    <button onclick="document.getElementById('roomSearch').value='${room}'; searchRoom();">View Details</button>
+                </div>`;
+            }
+        });
+        
+        document.getElementById('roomResult').innerHTML = html;
+    })
+    .catch(error => {
+        console.error('RMI Error:', error);
+        document.getElementById('roomResult').innerHTML = 
+            `<div class="result-item error">Connection failed: ${error.message}. Check if RMI Bridge (port 8083) is running.</div>`;
     });
-    
-    document.getElementById('roomResult').innerHTML = html;
 }
 
 // Module 3: REST API - Notices

@@ -17,6 +17,8 @@ start "Socket Bridge" cmd /k "cd module1-socket && java ComplaintBridge"
 timeout /t 2 /nobreak >nul
 start "RMI Server" cmd /k "cd module2-rmi && java RoomInfoServer"
 timeout /t 2 /nobreak >nul
+start "RMI Bridge" cmd /k "cd module2-rmi && java RoomInfoBridge"
+timeout /t 2 /nobreak >nul
 start "REST Server" cmd /k "cd module3-rest && java NoticeServer"
 timeout /t 2 /nobreak >nul
 start "P2P Peer 1" cmd /k "cd module4-p2p && java P2PPeer 9001"

@@ -2,12 +2,15 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 import java.util.concurrent.*;
+import java.nio.file.*;
 
 public class ComplaintServer {
     private static List<Complaint> complaints = Collections.synchronizedList(new ArrayList<>());
     private static int complaintCounter = 1;
+    private static final String DATA_FILE = "complaints.dat";
     
     public static void main(String[] args) {
+        loadComplaints();
         try (ServerSocket serverSocket = new ServerSocket(8080)) {
             System.out.println("Complaint Server started on port 8080");
             ExecutorService executor = Executors.newFixedThreadPool(10);
@@ -65,6 +68,7 @@ public class ComplaintServer {
                         parts[3]  // description
                     );
                     complaints.add(complaint);
+                    saveComplaints();
                     System.out.println("New complaint received: #" + complaint.getId() + " from Room " + complaint.getRoom());
                     out.println("SUCCESS|Complaint #" + complaint.getId() + " submitted successfully");
 
@@ -78,7 +82,7 @@ public class ComplaintServer {
         }
     }
     
-    static class Complaint {
+    static class Complaint implements Serializable {
         private int id;
         private String room;
         private String category;
@@ -100,5 +104,19 @@ public class ComplaintServer {
         public String toString() {
             return id + "," + room + "," + category + "," + description + "," + timestamp;
         }
+    }
+    
+    private static void saveComplaints() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DATA_FILE))) {
+            oos.writeObject(new ArrayList<>(complaints));
+            oos.writeInt(complaintCounter);
+        } catch (IOException e) {}
+    }
+    
+    private static void loadComplaints() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(DATA_FILE))) {
+            complaints.addAll((List<Complaint>) ois.readObject());
+            complaintCounter = ois.readInt();
+        } catch (Exception e) {}
     }
 }
