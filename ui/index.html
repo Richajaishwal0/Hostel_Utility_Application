@@ -74,44 +74,144 @@
       <!-- Module 3: REST API - Notices -->
       <div id="notices" class="module">
         <h2>Notice Board System (REST API)</h2>
-        <div class="form-section">
-          <h3>Admin - Add Notice</h3>
-          <form id="noticeForm">
-            <input
-              type="text"
-              id="noticeTitle"
-              placeholder="Notice Title"
-              required
-            />
-            <textarea
-              id="noticeMessage"
-              placeholder="Notice Message"
-              required
-            ></textarea>
-            <button type="submit">Add Notice</button>
-          </form>
+        
+        <!-- Role Selection -->
+        <div class="role-selection">
+          <button onclick="showNoticeRole('admin')" class="role-btn" id="adminRoleBtn">Admin Panel</button>
+          <button onclick="showNoticeRole('student')" class="role-btn active" id="studentRoleBtn">Student View</button>
         </div>
-        <div class="result-section">
-          <h3>Student - View Notices</h3>
-          <button onclick="loadNotices()">Load Notices</button>
-          <div id="noticesList"></div>
+        
+        <!-- Admin Panel -->
+        <div id="adminPanel" class="notice-panel" style="display: none;">
+          <h3>🔐 Admin - Manage Notices</h3>
+          <div class="form-section">
+            <form id="noticeForm">
+              <input
+                type="text"
+                id="noticeTitle"
+                placeholder="Notice Title (e.g., Mess Timing Change)"
+                required
+              />
+              <textarea
+                id="noticeMessage"
+                placeholder="Notice Message (e.g., Dinner timing changed to 7:30 PM starting tomorrow)"
+                rows="4"
+                required
+              ></textarea>
+              <button type="submit" class="admin-btn">📢 Publish Notice</button>
+            </form>
+          </div>
+          <div class="admin-stats">
+            <p>📊 <span id="noticeCount">0</span> notices published</p>
+            <button onclick="loadNoticesForAdmin()" class="refresh-btn">🔄 Refresh</button>
+          </div>
+        </div>
+        
+        <!-- Student Panel -->
+        <div id="studentPanel" class="notice-panel">
+          <h3>📋 Student - View Notices</h3>
+          <div class="student-actions">
+            <button onclick="loadNotices()" class="student-btn">📥 Load Latest Notices</button>
+            <button onclick="clearNoticeView()" class="clear-btn">🗑️ Clear View</button>
+          </div>
+          <div id="noticesList" class="notices-container">
+            <div class="no-notices">📭 No notices available. Click "Load Latest Notices" to check for updates.</div>
+          </div>
         </div>
       </div>
 
       <!-- Module 4: P2P - Resource Sharing -->
       <div id="resources" class="module">
         <h2>Student Resource Sharing (P2P)</h2>
-        <div class="form-section">
-          <h3>Upload Resource</h3>
-          <input type="text" id="fileName" placeholder="File Name" />
-          <input type="file" id="fileUpload" />
-          <button onclick="uploadFile()">Upload File</button>
+        
+        <!-- Peer Selection -->
+        <div class="peer-selection">
+          <button onclick="showPeerView('peer1')" class="peer-btn active" id="peer1Btn">🟢 Peer 1</button>
+          <button onclick="showPeerView('peer2')" class="peer-btn" id="peer2Btn">🔵 Peer 2</button>
         </div>
-        <div class="form-section">
-          <h3>Search & Download</h3>
-          <input type="text" id="searchFile" placeholder="Search File Name" />
-          <button onclick="searchFiles()">Search Files</button>
-          <div id="searchResults"></div>
+        
+        <!-- Peer 1 Section -->
+        <div id="peer1Section" class="peer-section">
+          <h3 style="color: #28a745;">🟢 Peer 1 Interface</h3>
+          
+          <!-- Network Status -->
+          <div class="p2p-status">
+            <h4>🌐 P2P Network Status</h4>
+            <div class="network-info">
+              <span class="status-indicator" id="statusIndicator1">🔴 Disconnected</span>
+              <button onclick="refreshNetworkStatus('peer1')" class="refresh-btn">🔄 Refresh</button>
+            </div>
+            <div id="peersList1" class="peers-list"></div>
+          </div>
+          
+          <!-- File Upload Section -->
+          <div class="form-section">
+            <h4>⬆️ Upload Resource (Peer 1)</h4>
+            <div class="upload-area">
+              <input type="file" id="fileUpload1" accept=".pdf,.txt,.doc,.docx,.ppt,.pptx" />
+              <button onclick="uploadFile('peer1')" class="upload-btn">📄 Share File</button>
+            </div>
+          </div>
+          
+          <!-- File Discovery Section -->
+          <div class="form-section">
+            <h4>🔍 Discover Resources</h4>
+            <div class="search-area">
+              <input type="text" id="searchFile1" placeholder="Search for files from other peers" />
+              <button onclick="searchFiles('peer1')" class="search-btn">🔍 Search</button>
+              <button onclick="listAllFiles('peer1')" class="list-btn">📁 Browse All</button>
+            </div>
+          </div>
+          
+          <!-- Results Section -->
+          <div class="result-section">
+            <h4>📊 Available Resources (Peer 1 View)</h4>
+            <div id="searchResults1" class="files-grid">
+              <div class="no-files">📁 No files found. Upload files or browse network to discover resources.</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Peer 2 Section -->
+        <div id="peer2Section" class="peer-section" style="display: none;">
+          <h3 style="color: #007bff;">🔵 Peer 2 Interface</h3>
+          
+          <!-- Network Status -->
+          <div class="p2p-status">
+            <h4>🌐 P2P Network Status</h4>
+            <div class="network-info">
+              <span class="status-indicator" id="statusIndicator2">🔴 Disconnected</span>
+              <button onclick="refreshNetworkStatus('peer2')" class="refresh-btn">🔄 Refresh</button>
+            </div>
+            <div id="peersList2" class="peers-list"></div>
+          </div>
+          
+          <!-- File Upload Section -->
+          <div class="form-section">
+            <h4>⬆️ Upload Resource (Peer 2)</h4>
+            <div class="upload-area">
+              <input type="file" id="fileUpload2" accept=".pdf,.txt,.doc,.docx,.ppt,.pptx" />
+              <button onclick="uploadFile('peer2')" class="upload-btn">📄 Share File</button>
+            </div>
+          </div>
+          
+          <!-- File Discovery Section -->
+          <div class="form-section">
+            <h4>🔍 Discover Resources</h4>
+            <div class="search-area">
+              <input type="text" id="searchFile2" placeholder="Search for files from other peers" />
+              <button onclick="searchFiles('peer2')" class="search-btn">🔍 Search</button>
+              <button onclick="listAllFiles('peer2')" class="list-btn">📁 Browse All</button>
+            </div>
+          </div>
+          
+          <!-- Results Section -->
+          <div class="result-section">
+            <h4>📊 Available Resources (Peer 2 View)</h4>
+            <div id="searchResults2" class="files-grid">
+              <div class="no-files">📁 No files found. Upload files or browse network to discover resources.</div>
+            </div>
+          </div>
         </div>
       </div>
 

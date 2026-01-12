@@ -64,15 +64,16 @@ This application demonstrates that **not all distributed data requires persisten
 
 ### **Module 5: Shared Memory - Mess Feedback Counter**
 
-- **Technology**: System V Shared Memory + Semaphores (C)
+- **Technology**: Java Shared Memory Simulation with Synchronization
 - **Functionality**: Live feedback counting with process synchronization
 - **Key Features**:
-  - Inter-process communication using shared memory segments
-  - Semaphore-based synchronization for race condition prevention
+  - Shared memory simulation using static variables and AtomicInteger
+  - ReentrantLock for synchronization (semaphore simulation)
   - Real-time counter updates across multiple processes
-  - System-level IPC demonstration
-- **IPC Keys**: SHM_KEY=9999, SEM_KEY=8888
-- **Storage**: C struct in shared memory with atomic operations
+  - HTTP bridge for web UI integration
+  - Thread-safe operations preventing race conditions
+- **Ports**: 8084 (Unified Server)
+- **Storage**: AtomicInteger counters with synchronized access
 
 ## Technical Architecture
 
@@ -96,8 +97,7 @@ This application demonstrates that **not all distributed data requires persisten
 
 ### **Prerequisites**
 
-- Java JDK 8+ (for modules 1-4)
-- GCC Compiler (for module 5)
+- Java JDK 8+ (for all modules)
 - Modern web browser
 - Windows/Linux/macOS
 
@@ -106,15 +106,17 @@ This application demonstrates that **not all distributed data requires persisten
 ```bash
 # Start all servers automatically
 start_all.bat    # Windows
-# OR
-make demo        # Linux/macOS
 ```
 
 ### **Manual Startup (if needed)**
 
 ```bash
-# Compile all modules
-make all
+# Compile all modules (done automatically by start_all.bat)
+javac module1-socket/*.java
+javac module2-rmi/*.java
+javac module3-rest/*.java
+javac module4-p2p/*.java
+javac module5-shared-memory/*.java
 
 # Start individual servers
 java -cp module1-socket ComplaintServer     # Port 8080
@@ -124,6 +126,8 @@ java -cp module2-rmi RoomInfoBridge         # Port 8083
 java -cp module3-rest NoticeServer          # Port 8081
 java -cp module4-p2p P2PPeer 9001          # Port 9001
 java -cp module4-p2p P2PPeer 9002          # Port 9002
+java -cp module4-p2p P2PBridge             # Port 8084
+java -cp module5-shared-memory SharedMemoryFeedbackServer # Port 8084
 
 # Open web interface
 open ui/index.html
@@ -185,7 +189,7 @@ open ui/index.html
 - ✅ **RMI**: Remote objects, stub-skeleton architecture
 - ✅ **REST APIs**: HTTP methods, stateless design, JSON handling
 - ✅ **P2P Networks**: Decentralized architecture, peer discovery
-- ✅ **IPC**: Shared memory, semaphores, process synchronization
+- ✅ **IPC**: Java shared memory simulation, synchronization, process coordination
 
 ### **Software Engineering Skills**
 
