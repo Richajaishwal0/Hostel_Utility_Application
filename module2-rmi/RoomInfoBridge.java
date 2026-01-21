@@ -44,7 +44,7 @@ public class RoomInfoBridge {
             String roomNumber = query.split("=")[1];
             
             try {
-                RoomInfoService.RoomInfo room = bridge.service.getRoomInfo(roomNumber);
+                RoomInfoServer.RoomInfo room = bridge.service.getRoomInfo(roomNumber);
                 String response = room != null ? 
                     String.format("{\"room\":\"%s\",\"occupants\":\"%s\",\"warden\":\"%s\",\"contact\":\"%s\"}", 
                         room.roomNumber, String.join(", ", room.occupants), room.wardenName, room.wardenContact) :

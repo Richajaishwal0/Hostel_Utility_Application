@@ -3,6 +3,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
+import java.io.Serializable;
 
 public class RoomInfoServer extends UnicastRemoteObject implements RoomInfoService {
     private Map<String, RoomInfo> roomDatabase;
@@ -28,6 +29,20 @@ public class RoomInfoServer extends UnicastRemoteObject implements RoomInfoServi
     @Override
     public List<String> getAllRooms() throws RemoteException {
         return new ArrayList<>(roomDatabase.keySet());
+    }
+    
+    public static class RoomInfo implements Serializable {
+        public String roomNumber;
+        public List<String> occupants;
+        public String wardenName;
+        public String wardenContact;
+        
+        public RoomInfo(String roomNumber, List<String> occupants, String wardenName, String wardenContact) {
+            this.roomNumber = roomNumber;
+            this.occupants = occupants;
+            this.wardenName = wardenName;
+            this.wardenContact = wardenContact;
+        }
     }
     
     public static void main(String[] args) {

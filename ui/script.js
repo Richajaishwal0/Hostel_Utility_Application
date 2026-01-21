@@ -345,7 +345,7 @@ function refreshNetworkStatus(peer) {
     const statusId = peer === 'peer1' ? 'statusIndicator1' : 'statusIndicator2';
     const peersListId = peer === 'peer1' ? 'peersList1' : 'peersList2';
     
-    fetch('http://localhost:8084/p2p/peers')
+    fetch('http://localhost:8085/p2p/peers')
     .then(response => {
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         return response.json();
@@ -387,7 +387,7 @@ function uploadFile(peer) {
     const formData = new FormData();
     formData.append('file', file, file.name);
     
-    fetch('http://localhost:8084/p2p/upload', {
+    fetch('http://localhost:8085/p2p/upload', {
         method: 'POST',
         body: formData
     })
@@ -415,7 +415,7 @@ function searchFiles(peer) {
         return;
     }
     
-    fetch(`http://localhost:8084/p2p/search?file=${encodeURIComponent(searchTerm)}`)
+    fetch(`http://localhost:8085/p2p/search?file=${encodeURIComponent(searchTerm)}`)
     .then(response => {
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         return response.json();
@@ -431,7 +431,7 @@ function searchFiles(peer) {
 }
 
 function listAllFiles(peer) {
-    fetch('http://localhost:8084/p2p/files')
+    fetch('http://localhost:8085/p2p/files')
     .then(response => {
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         return response.json();
@@ -475,7 +475,7 @@ function displayFiles(files, title, peer) {
                     </div>
                 </div>
                 <div class="file-actions">
-                    <a href="http://localhost:8084/p2p/download?fileName=${encodeURIComponent(file.fileName)}&peerAddress=${encodeURIComponent(peerAddress)}" 
+                    <a href="http://localhost:8085/p2p/download?fileName=${encodeURIComponent(file.fileName)}&peerAddress=${encodeURIComponent(peerAddress)}" 
                        download="${file.fileName}" 
                        class="download-link" 
                        onclick="alert('✅ Downloading ${file.fileName} to ${peer.toUpperCase()}!')">
@@ -498,7 +498,7 @@ function displayFiles(files, title, peer) {
 
 function downloadFile(fileName, peerAddr, peer) {
     // Create a temporary download link
-    const downloadUrl = `http://localhost:8084/p2p/download?fileName=${encodeURIComponent(fileName)}&peerAddress=${encodeURIComponent(peerAddr)}`;
+    const downloadUrl = `http://localhost:8085/p2p/download?fileName=${encodeURIComponent(fileName)}&peerAddress=${encodeURIComponent(peerAddr)}`;
     
     // Create invisible anchor element for download
     const link = document.createElement('a');

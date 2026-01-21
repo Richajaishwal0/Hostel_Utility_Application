@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class P2PBridge {
     private P2PPeer localPeer;
-    private static final int BRIDGE_PORT = 8084;
+    private static final int BRIDGE_PORT = 8085;
     
     public P2PBridge() {
         // Create a local peer for the bridge
