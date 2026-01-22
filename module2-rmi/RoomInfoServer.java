@@ -15,10 +15,16 @@ public class RoomInfoServer extends UnicastRemoteObject implements RoomInfoServi
     
     private void initializeRoomData() {
         roomDatabase = new HashMap<>();
-        roomDatabase.put("101", new RoomInfo("101", Arrays.asList("John Doe", "Jane Smith"), "Mr. Anderson", "9876543210"));
-        roomDatabase.put("102", new RoomInfo("102", Arrays.asList("Bob Wilson"), "Mr. Anderson", "9876543210"));
-        roomDatabase.put("201", new RoomInfo("201", Arrays.asList("Alice Brown", "Carol White"), "Ms. Johnson", "9876543211"));
-        roomDatabase.put("202", new RoomInfo("202", Arrays.asList("David Lee"), "Ms. Johnson", "9876543211"));
+        roomDatabase.put("101", new RoomInfo("101", Arrays.asList("Arjun Sharma", "Vikram Patel", "Rohit Gupta", "Amit Kumar"), "Mr. Rajesh Singh", "9876543210"));
+        roomDatabase.put("102", new RoomInfo("102", Arrays.asList("Priya Agarwal", "Sneha Reddy", "Kavya Nair", "Pooja Joshi"), "Mr. Rajesh Singh", "9876543210"));
+        roomDatabase.put("103", new RoomInfo("103", Arrays.asList("Ravi Mehta", "Suresh Yadav", "Kiran Jain", "Deepak Verma"), "Mr. Rajesh Singh", "9876543210"));
+        roomDatabase.put("104", new RoomInfo("104", Arrays.asList("Anita Sharma", "Meera Iyer", "Divya Pillai", "Rashmi Sinha"), "Mr. Rajesh Singh", "9876543210"));
+        roomDatabase.put("105", new RoomInfo("105", Arrays.asList("Sanjay Tiwari", "Manoj Singh", "Ajay Pandey", "Vinod Mishra"), "Mr. Rajesh Singh", "9876543210"));
+        roomDatabase.put("106", new RoomInfo("106", Arrays.asList("Sunita Devi", "Rekha Kumari", "Geeta Rani", "Sushma Bai"), "Ms. Lakshmi Devi", "9876543211"));
+        roomDatabase.put("107", new RoomInfo("107", Arrays.asList("Rahul Agrawal", "Nikhil Bansal", "Sachin Goyal", "Tarun Saxena"), "Ms. Lakshmi Devi", "9876543211"));
+        roomDatabase.put("108", new RoomInfo("108", Arrays.asList("Nisha Chandra", "Ritu Malhotra", "Swati Kapoor", "Preeti Arora"), "Ms. Lakshmi Devi", "9876543211"));
+        roomDatabase.put("109", new RoomInfo("109", Arrays.asList("Ashok Rao", "Prakash Jha", "Ramesh Chand", "Sunil Das"), "Ms. Lakshmi Devi", "9876543211"));
+        roomDatabase.put("110", new RoomInfo("110", Arrays.asList("Madhuri Bhatt", "Shanti Devi", "Kamala Soni", "Usha Gupta"), "Ms. Lakshmi Devi", "9876543211"));
     }
     
     @Override
@@ -29,20 +35,6 @@ public class RoomInfoServer extends UnicastRemoteObject implements RoomInfoServi
     @Override
     public List<String> getAllRooms() throws RemoteException {
         return new ArrayList<>(roomDatabase.keySet());
-    }
-    
-    public static class RoomInfo implements Serializable {
-        public String roomNumber;
-        public List<String> occupants;
-        public String wardenName;
-        public String wardenContact;
-        
-        public RoomInfo(String roomNumber, List<String> occupants, String wardenName, String wardenContact) {
-            this.roomNumber = roomNumber;
-            this.occupants = occupants;
-            this.wardenName = wardenName;
-            this.wardenContact = wardenContact;
-        }
     }
     
     public static void main(String[] args) {

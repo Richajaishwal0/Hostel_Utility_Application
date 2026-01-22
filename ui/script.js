@@ -143,11 +143,39 @@ function searchRoom() {
                 `<div class="result-item error">${data.error}</div>`;
         } else {
             document.getElementById('roomResult').innerHTML = `
-                <div class="result-item success">
-                    <h4>Room ${data.room} Information</h4>
-                    <p><strong>Occupants:</strong> ${data.occupants}</p>
-                    <p><strong>Warden:</strong> ${data.warden}</p>
-                    <p><strong>Contact:</strong> ${data.contact}</p>
+                <div class="result-item success room-details">
+                    <div class="room-header">
+                        <h4>🏠 Room ${data.room} Information</h4>
+                    </div>
+                    <div class="room-content">
+                        <div class="occupants-section">
+                            <h5>👥 Room Members (${data.occupants.length}/4):</h5>
+                            <div class="occupants-grid">
+                                ${data.occupants.map((name, index) => 
+                                    `<div class="occupant-card">
+                                        <span class="occupant-icon">👤</span>
+                                        <span class="occupant-name">${name}</span>
+                                        <span class="occupant-bed">Bed ${index + 1}</span>
+                                    </div>`
+                                ).join('')}
+                            </div>
+                        </div>
+                        <div class="warden-section">
+                            <h5>👨‍💼 Warden Information:</h5>
+                            <div class="warden-info">
+                                <div class="warden-detail">
+                                    <span class="detail-icon">👤</span>
+                                    <span class="detail-label">Name:</span>
+                                    <span class="detail-value">${data.warden}</span>
+                                </div>
+                                <div class="warden-detail">
+                                    <span class="detail-icon">📞</span>
+                                    <span class="detail-label">Contact:</span>
+                                    <span class="detail-value">${data.contact}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             `;
         }
@@ -157,6 +185,11 @@ function searchRoom() {
         document.getElementById('roomResult').innerHTML = 
             `<div class="result-item error">Connection failed: ${error.message}. Check if RMI Bridge (port 8083) is running.</div>`;
     });
+}
+
+function quickSearchRoom(roomNumber) {
+    document.getElementById('roomSearch').value = roomNumber;
+    searchRoom();
 }
 
 function loadAllRooms() {

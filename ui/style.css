@@ -695,3 +695,139 @@ button:hover {
         gap: 5px;
     }
 }
+.room-buttons {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.room-btn {
+  padding: 8px 12px;
+  background: #007bff;
+  color: white;
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.room-btn:hover {
+  background: #0056b3;
+  border-color: #0056b3;
+  transform: translateY(-1px);
+}
+
+.quick-rooms h4 {
+  margin: 15px 0 8px 0;
+  color: #495057;
+  font-size: 16px;
+}
+/* Room Details Styles */
+.room-details {
+  border-left: 4px solid #007bff;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.room-header {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  padding: 15px;
+  margin: -15px -15px 20px -15px;
+  border-radius: 5px 5px 0 0;
+}
+
+.room-header h4 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.room-content {
+  display: grid;
+  gap: 20px;
+}
+
+.occupants-section h5, .warden-section h5 {
+  color: #495057;
+  margin-bottom: 12px;
+  font-size: 16px;
+  border-bottom: 2px solid #dee2e6;
+  padding-bottom: 5px;
+}
+
+.occupants-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.occupant-card {
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.occupant-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,123,255,0.15);
+}
+
+.occupant-icon {
+  font-size: 20px;
+  color: #007bff;
+}
+
+.occupant-name {
+  font-weight: bold;
+  color: #495057;
+  flex-grow: 1;
+}
+
+.occupant-bed {
+  font-size: 12px;
+  background: #e9ecef;
+  color: #6c757d;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.warden-info {
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 15px;
+}
+
+.warden-detail {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.warden-detail:last-child {
+  margin-bottom: 0;
+}
+
+.detail-icon {
+  font-size: 16px;
+  color: #007bff;
+  width: 20px;
+}
+
+.detail-label {
+  font-weight: bold;
+  color: #495057;
+  min-width: 70px;
+}
+
+.detail-value {
+  color: #6c757d;
+}

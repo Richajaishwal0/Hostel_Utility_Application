@@ -14,7 +14,7 @@ public class RoomInfoClient {
         }
     }
     
-    public RoomInfoService.RoomInfo getRoomInfo(String roomNumber) {
+    public RoomInfo getRoomInfo(String roomNumber) {
         try {
             return service.getRoomInfo(roomNumber);
         } catch (Exception e) {

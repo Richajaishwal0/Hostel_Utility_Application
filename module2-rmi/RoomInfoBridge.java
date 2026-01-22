@@ -44,10 +44,12 @@ public class RoomInfoBridge {
             String roomNumber = query.split("=")[1];
             
             try {
-                RoomInfoServer.RoomInfo room = bridge.service.getRoomInfo(roomNumber);
+                RoomInfo room = bridge.service.getRoomInfo(roomNumber);
                 String response = room != null ? 
-                    String.format("{\"room\":\"%s\",\"occupants\":\"%s\",\"warden\":\"%s\",\"contact\":\"%s\"}", 
-                        room.roomNumber, String.join(", ", room.occupants), room.wardenName, room.wardenContact) :
+                    String.format("{\"room\":\"%s\",\"occupants\":%s,\"warden\":\"%s\",\"contact\":\"%s\"}", 
+                        room.roomNumber, 
+                        "[\"" + String.join("\",\"", room.occupants) + "\"]",
+                        room.wardenName, room.wardenContact) :
                     "{\"error\":\"Room not found\"}";
                 
                 exchange.getResponseHeaders().set("Content-Type", "application/json");

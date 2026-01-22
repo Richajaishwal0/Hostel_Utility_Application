@@ -68,15 +68,16 @@ This single command will:
 | P2P Peer 1 | 9001 | File sharing peer |
 | P2P Peer 2 | 9002 | File sharing peer |
 | P2P Bridge | 8085 | HTTP bridge for P2P |
-| Shared Memory Server | 8084 | Feedback counter |
+| UI Server | 8086 | Web interface |
 
 ### **Access the Application**
 
-After starting servers, open the web interface:
-```cmd
-# Open in your default browser
-start ui\index.html
+After starting servers, the UI will automatically open in your browser:
 ```
+http://localhost:8086
+```
+
+Or manually open: `http://localhost:8086`
 
 ### **Manual Startup (Alternative)**
 
